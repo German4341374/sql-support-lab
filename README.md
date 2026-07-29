@@ -295,6 +295,12 @@ measured summary.
 
 Raw plans are committed in [optimization/results](optimization/results).
 
+Measured on the pinned CI container, execution time changed from 2.331 to
+0.487 ms for the Critical queue, 6.762 to 0.551 ms for the SLA queue, 2.388 to
+0.594 ms for a technician queue, 5.232 to 2.291 ms for recurring device
+problems, and 8.108 to 3.472 ms for full-text search. These are run-specific
+measurements; the raw plan nodes and buffer evidence are the durable result.
+
 ## Example output
 
 Initialization prints deterministic counts:

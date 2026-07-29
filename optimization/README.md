@@ -35,7 +35,8 @@ Resolved assignments make up a large share of assignment history but are not
 needed when opening one technician's current work queue.
 `idx_assignments_active_technician` indexes only active rows, begins with the
 technician, and stores newest assignments first. The optimized plan should
-replace a relation-wide filter and sort with a bounded index scan.
+replace a relation-wide filter with a selective index or bitmap path. PostgreSQL
+may retain the inexpensive in-memory sort when a technician has few rows.
 
 ## 4. Device problem history
 

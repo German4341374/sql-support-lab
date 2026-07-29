@@ -1,0 +1,14 @@
+                                                     QUERY PLAN                                                      
+---------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=1308.56..1308.57 rows=1 width=8) (actual time=7.955..7.956 rows=1.00 loops=1)
+   Buffers: shared hit=1053
+   ->  Seq Scan on incidents  (cost=0.00..1303.00 rows=2222 width=0) (actual time=0.022..7.787 rows=3333.00 loops=1)
+         Filter: (search_document @@ '''databas'' <-> ''timeout'''::tsquery)
+         Rows Removed by Filter: 16667
+         Buffers: shared hit=1053
+ Planning:
+   Buffers: shared hit=127
+ Planning Time: 1.612 ms
+ Execution Time: 8.108 ms
+(10 rows)
+

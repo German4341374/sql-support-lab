@@ -1,0 +1,24 @@
+                                                                        QUERY PLAN                                                                        
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=1213.38..1213.63 rows=100 width=64) (actual time=2.231..2.235 rows=28.00 loops=1)
+   Buffers: shared hit=312
+   ->  Sort  (cost=1213.38..1213.66 rows=114 width=64) (actual time=2.230..2.232 rows=28.00 loops=1)
+         Sort Key: assignment.assigned_at DESC
+         Sort Method: quicksort  Memory: 28kB
+         Buffers: shared hit=312
+         ->  Nested Loop  (cost=0.29..1209.48 rows=114 width=64) (actual time=1.690..2.183 rows=28.00 loops=1)
+               Buffers: shared hit=309
+               ->  Seq Scan on incident_assignments assignment  (cost=0.00..510.71 rows=114 width=20) (actual time=1.662..1.930 rows=28.00 loops=1)
+                     Filter: ((unassigned_at IS NULL) AND (technician_id = 42))
+                     Rows Removed by Filter: 22829
+                     Buffers: shared hit=225
+               ->  Index Scan using incidents_pkey on incidents incident  (cost=0.29..6.13 rows=1 width=52) (actual time=0.009..0.009 rows=1.00 loops=28)
+                     Index Cond: (id = assignment.incident_id)
+                     Index Searches: 28
+                     Buffers: shared hit=84
+ Planning:
+   Buffers: shared hit=342
+ Planning Time: 2.513 ms
+ Execution Time: 2.388 ms
+(20 rows)
+

@@ -1,0 +1,15 @@
+                                                                     QUERY PLAN                                                                      
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.29..835.66 rows=100 width=64) (actual time=0.145..2.126 rows=100.00 loops=1)
+   Buffers: shared hit=3633
+   ->  Index Scan using idx_incidents_created_at on incidents  (cost=0.29..4912.28 rows=588 width=64) (actual time=0.144..2.117 rows=100.00 loops=1)
+         Filter: ((status = ANY ('{OPEN,IN_PROGRESS}'::incident_status[])) AND (priority = 'CRITICAL'::incident_priority))
+         Rows Removed by Filter: 3519
+         Index Searches: 1
+         Buffers: shared hit=3633
+ Planning:
+   Buffers: shared hit=170
+ Planning Time: 1.349 ms
+ Execution Time: 2.218 ms
+(11 rows)
+

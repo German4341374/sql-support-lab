@@ -1,0 +1,28 @@
+                                                                            QUERY PLAN                                                                            
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=899.64..899.89 rows=100 width=64) (actual time=0.437..0.442 rows=28.00 loops=1)
+   Buffers: shared hit=115 read=2
+   ->  Sort  (cost=899.64..899.93 rows=114 width=64) (actual time=0.436..0.439 rows=28.00 loops=1)
+         Sort Key: assignment.assigned_at DESC
+         Sort Method: quicksort  Memory: 28kB
+         Buffers: shared hit=115 read=2
+         ->  Nested Loop  (cost=5.46..895.75 rows=114 width=64) (actual time=0.071..0.396 rows=28.00 loops=1)
+               Buffers: shared hit=112 read=2
+               ->  Bitmap Heap Scan on incident_assignments assignment  (cost=5.17..196.98 rows=114 width=20) (actual time=0.044..0.144 rows=28.00 loops=1)
+                     Recheck Cond: ((technician_id = 42) AND (unassigned_at IS NULL))
+                     Heap Blocks: exact=28
+                     Buffers: shared hit=28 read=2
+                     ->  Bitmap Index Scan on idx_assignments_active_technician  (cost=0.00..5.14 rows=114 width=0) (actual time=0.035..0.035 rows=28.00 loops=1)
+                           Index Cond: (technician_id = 42)
+                           Index Searches: 1
+                           Buffers: shared read=2
+               ->  Index Scan using incidents_pkey on incidents incident  (cost=0.29..6.13 rows=1 width=52) (actual time=0.008..0.008 rows=1.00 loops=28)
+                     Index Cond: (id = assignment.incident_id)
+                     Index Searches: 28
+                     Buffers: shared hit=84
+ Planning:
+   Buffers: shared hit=457 read=1
+ Planning Time: 3.366 ms
+ Execution Time: 0.594 ms
+(24 rows)
+

@@ -1,0 +1,28 @@
+                                                                                  QUERY PLAN                                                                                  
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=1220.10..1220.35 rows=100 width=32) (actual time=2.063..2.075 rows=100.00 loops=1)
+   Buffers: shared hit=746 read=11
+   ->  Sort  (cost=1220.10..1220.76 rows=264 width=32) (actual time=2.062..2.067 rows=100.00 loops=1)
+         Sort Key: (count(*)) DESC, device_id
+         Sort Method: top-N heapsort  Memory: 36kB
+         Buffers: shared hit=746 read=11
+         ->  HashAggregate  (cost=1200.11..1210.01 rows=264 width=32) (actual time=1.822..1.896 rows=492.00 loops=1)
+               Group Key: device_id
+               Filter: (count(*) >= 2)
+               Batches: 1  Memory Usage: 105kB
+               Rows Removed by Filter: 8
+               Buffers: shared hit=743 read=11
+               ->  Bitmap Heap Scan on incidents  (cost=55.77..1185.01 rows=1510 width=16) (actual time=0.354..1.372 rows=1509.00 loops=1)
+                     Recheck Cond: (((category)::text = 'Database'::text) AND (created_at >= '2025-01-01 00:00:00+00'::timestamp with time zone) AND (device_id IS NOT NULL))
+                     Heap Blocks: exact=743
+                     Buffers: shared hit=743 read=11
+                     ->  Bitmap Index Scan on idx_incidents_category_created_device  (cost=0.00..55.39 rows=1510 width=0) (actual time=0.264..0.265 rows=1509.00 loops=1)
+                           Index Cond: (((category)::text = 'Database'::text) AND (created_at >= '2025-01-01 00:00:00+00'::timestamp with time zone))
+                           Index Searches: 1
+                           Buffers: shared read=11
+ Planning:
+   Buffers: shared hit=283
+ Planning Time: 2.052 ms
+ Execution Time: 2.291 ms
+(24 rows)
+

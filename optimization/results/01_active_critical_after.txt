@@ -1,0 +1,14 @@
+                                                                          QUERY PLAN                                                                           
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.28..320.82 rows=100 width=64) (actual time=0.052..0.335 rows=100.00 loops=1)
+   Buffers: shared hit=100 read=3
+   ->  Index Only Scan using idx_incidents_active_critical on incidents  (cost=0.28..1885.09 rows=588 width=64) (actual time=0.051..0.326 rows=100.00 loops=1)
+         Heap Fetches: 100
+         Index Searches: 1
+         Buffers: shared hit=100 read=3
+ Planning:
+   Buffers: shared hit=257 read=3
+ Planning Time: 1.936 ms
+ Execution Time: 0.391 ms
+(10 rows)
+

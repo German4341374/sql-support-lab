@@ -1,0 +1,18 @@
+                                                                      QUERY PLAN                                                                      
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=1119.46..1119.47 rows=1 width=8) (actual time=3.402..3.403 rows=1.00 loops=1)
+   Buffers: shared hit=1060
+   ->  Bitmap Heap Scan on incidents  (cost=33.13..1113.91 rows=2222 width=0) (actual time=1.063..3.236 rows=3333.00 loops=1)
+         Recheck Cond: (search_document @@ '''databas'' <-> ''timeout'''::tsquery)
+         Heap Blocks: exact=1053
+         Buffers: shared hit=1060
+         ->  Bitmap Index Scan on idx_incidents_search_document  (cost=0.00..32.58 rows=2222 width=0) (actual time=0.945..0.946 rows=3333.00 loops=1)
+               Index Cond: (search_document @@ '''databas'' <-> ''timeout'''::tsquery)
+               Index Searches: 1
+               Buffers: shared hit=7
+ Planning:
+   Buffers: shared hit=229
+ Planning Time: 2.217 ms
+ Execution Time: 3.472 ms
+(14 rows)
+

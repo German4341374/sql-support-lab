@@ -1,0 +1,14 @@
+                                                                      QUERY PLAN                                                                      
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.29..46.78 rows=100 width=36) (actual time=0.061..0.408 rows=100.00 loops=1)
+   Buffers: shared hit=100 read=2
+   ->  Index Scan using idx_incidents_active_sla on incidents  (cost=0.29..4638.86 rows=9976 width=36) (actual time=0.060..0.398 rows=100.00 loops=1)
+         Index Cond: (sla_deadline < '2026-01-01 00:00:00+00'::timestamp with time zone)
+         Index Searches: 1
+         Buffers: shared hit=100 read=2
+ Planning:
+   Buffers: shared hit=259
+ Planning Time: 1.932 ms
+ Execution Time: 0.464 ms
+(10 rows)
+
