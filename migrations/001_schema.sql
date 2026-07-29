@@ -216,7 +216,6 @@ CREATE INDEX idx_incidents_created_at ON incidents (created_at DESC);
 CREATE INDEX idx_incident_comments_incident_created ON incident_comments (incident_id, created_at);
 CREATE INDEX idx_installations_software ON software_installations (software_id);
 CREATE INDEX idx_assignments_incident ON incident_assignments (incident_id);
-CREATE INDEX idx_assignments_technician ON incident_assignments (technician_id);
 CREATE INDEX idx_audit_incident_changed ON incident_audit_log (incident_id, changed_at DESC);
 
 CREATE UNIQUE INDEX uq_active_primary_assignment

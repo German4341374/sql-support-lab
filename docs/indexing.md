@@ -23,7 +23,7 @@ measured:
 - a partial covering index for active Critical incidents;
 - a partial covering SLA-deadline index for active incidents;
 - a partial current-assignment index;
-- a device/category/time investigation index;
+- a category/time/device recurring-problem index;
 - a GIN full-text index.
 
 ## Trade-offs

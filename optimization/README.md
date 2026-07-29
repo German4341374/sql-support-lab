@@ -32,17 +32,17 @@ allow early termination after the limit.
 ## 3. Active technician workload
 
 Resolved assignments make up a large share of assignment history but are not
-needed for the current workload report. `idx_assignments_active_technician`
-indexes only rows where `unassigned_at IS NULL` and includes the join keys. The
-optimized plan should read fewer assignment pages and may use an index-only
-scan.
+needed when opening one technician's current work queue.
+`idx_assignments_active_technician` indexes only active rows, begins with the
+technician, and stores newest assignments first. The optimized plan should
+replace a relation-wide filter and sort with a bounded index scan.
 
 ## 4. Device problem history
 
-The original indexes do not jointly support a single device, a time range, and
-category grouping. `idx_incidents_device_category_created` places `device_id`
-first and retains category/time locality, reducing heap pages scanned for a
-device-specific investigation.
+The report finds devices repeatedly affected by one category over a time range.
+`idx_incidents_category_created_device` places the equality category first,
+then time, and retains the grouping device. The optimized plan should avoid
+scanning unrelated incident categories and can use a covering index path.
 
 ## 5. Full-text search
 
