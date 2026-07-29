@@ -1,0 +1,65 @@
+name: PostgreSQL Lab CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sql-lab-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  layout:
+    name: Repository and Compose validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Validate repository layout
+        run: bash scripts/check-layout.sh
+
+      - name: Validate Docker Compose configuration
+        run: docker compose config --quiet
+
+  database:
+    name: PostgreSQL smoke and optimization plans
+    needs: layout
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Run full database smoke test
+        run: bash scripts/smoke-test.sh
+
+      - name: Capture before and after query plans
+        run: bash scripts/capture-plans.sh
+
+      - name: Upload EXPLAIN ANALYZE evidence
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: postgres-query-plans-${{ github.sha }}
+          path: optimization/results/*.txt
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Show database logs on failure
+        if: failure()
+        run: docker compose logs db || true
+
+      - name: Remove test environment
+        if: always()
+        run: docker compose down --volumes --remove-orphans

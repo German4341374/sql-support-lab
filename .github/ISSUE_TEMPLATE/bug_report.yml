@@ -1,0 +1,26 @@
+name: SQL or documentation issue
+description: Report a reproducible schema, seed, query, or documentation defect
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: input
+    id: postgres-version
+    attributes:
+      label: PostgreSQL version
+      placeholder: PostgreSQL 18.4
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command or SQL scenario
+      description: Include a command that uses only the deterministic sample data.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Actual and expected behavior
+    validations:
+      required: true
