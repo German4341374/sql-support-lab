@@ -1,0 +1,7 @@
+.env
+optimization/results/*.local.txt
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
