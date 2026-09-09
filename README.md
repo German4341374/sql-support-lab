@@ -4,10 +4,11 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18.4-336791?logo=postgresql&logoColor=white)](docker-compose.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-0a7f5a.svg)](LICENSE)
 
-SQL Support Lab is a hands-on PostgreSQL laboratory modeled after a corporate
-Service Desk. It focuses on relational modeling, deterministic test data,
-analytical SQL, indexing, query-plan analysis, transactions, triggers, and
-repeatable database testing. There is no application or user interface.
+A PostgreSQL lab with a Service Desk dataset: users, devices, tickets, and installed software.
+Load the sample data, pick a query, and inspect the result or its query plan.
+
+The exercises cover joins, window functions, indexes, transactions, and triggers.
+It's SQL and a few Bash scripts, with no app or web interface to set up.
 
 ## Highlights
 
